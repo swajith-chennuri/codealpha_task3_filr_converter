@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Converter</title>
+    <style>*,*:after,*:before{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    /* --styling the body of background-- */
+    body{
+        font-family: arial;
+        font-size: 16px;
+        margin: 0;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(133deg, #d292ed, #f0e50d);
+    }
+    /* --styling the container class-- */
+    .container{
+        width: 450px;
+        padding: 30px;
+        background:#ffff;
+        border-radius: 5px;
+        text-align: center;
+    }
+    /* --styling the Img shown part of the body-- */
+    #showImg{
+        display: block;
+        margin: 0 auto;
+        max-width: 400px;
+        min-width: 200px;
+        background: #a4258f;
+        border-radius: 5px;
+    }
+    /* --setting height and width of the image-- */
+    img{
+        width: 100%;
+        height: 100%;
+    }
+    /* --styling the button view-- */
+    .button{
+        display: flex;
+    }
+    button,.upload{
+        width: 220px;
+        margin: 50px 20px 10px 20px;
+        text-align: center;
+        position: relative;
+        padding: 10px 5px;
+        font-size: 17px;
+        background-color: #028041;
+        color: #fff;
+        display: block;
+        border-radius: 5px;
+        outline:#fff;
+    }
+    input{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 1;
+    }
+    .pdfDown{
+        color: rgb(251, 249, 249);
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition-duration: 0.4s;
+    border: 2px solid #4CAF50;
+    font-size: 16px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    .upload{
+    color: rgb(251, 249, 249);
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #4c82af;
+    border: 2px solid #4c82af;
+    font-size: 16px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+    </style>
+    
+</head>
+<body>
+     <div class="container">
+
+        <!-- image show -->
+        <img id="showImg"> 
+        <h2>img to pdf Converter</h2>
+        <!--button-->
+        <div class="button">
+            
+            <div class="upload">
+                <input type="file" onchange="loadFile(event)" name="" accept=".png, .jpg, .jpeg">Upload Image
+            </div>
+            <button onclick = "pdfDown()" class="pdfDown">Download as PDF</button>
+        </div>
+     </div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+     <script>
+         var newImage, showImg;
+ 
+         function loadFile(event) {
+             showImg = document.getElementById('showImg');
+             showImg.src = URL.createObjectURL(event.target.files[0]);
+ 
+             newImage = document.createElement('img');
+             newImage.src = URL.createObjectURL(event.target.files[0]);
+ 
+             showImg.onload = function () {
+                 URL.revokeObjectURL(showImg.src); // Free memory
+             };
+         }
+ 
+         function pdfDown() {
+             var doc = new jsPDF();
+             doc.addImage(newImage, 'JPEG', 10, 10, 180, 150);
+             doc.save('ImageToPDF.pdf');
+         }
+     </script>
+    
+</body>
+</html>
